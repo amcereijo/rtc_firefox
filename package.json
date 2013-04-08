@@ -1,0 +1,15 @@
+{
+	"license": "",
+	"description": "This extension allows make a retweet with a comment in Twitter web page", 
+	"contributors": [], 
+	"author": "_amcereijo_", 
+	"url": "", 
+	"dependencies": ["api-utils", "addon-kit"], 
+	"version": "initial.rev65", 
+	"lib": "lib", 
+	"fullName": "Retweet with comment", 
+	"main": "main", 
+	"id": "jid0-Conxwb7ZozsPsh9oB4BWRIwbArs", 
+	"name": "retweet-with-comment",
+	"icon":"rtc.png"
+}

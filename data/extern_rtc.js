@@ -9,39 +9,40 @@ var ExternFunction = (function() {
 		//rtc li element
 	    rtcLiElement,
 		//to save the new tweet original title
-		previusTitle;
+		previusTitle,
+		tweetButton,
+		tweetDialog,
+		tweetDialogContent,
+		elementToObserv;
 
 
 	//action when rtc li element is clicked
 	var clickRtc = function (e) {
 		//avoid to execute "a" default action
 		e.preventDefault();
-		var target = e.target;
-		//tweet element
-        var parent = $(target).closest('.content');
-        //tweet text
-		var tweetText = $(parent).find('.js-tweet-text').text();
-		//twitter user
-		var twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ';
+		var target = e.target,
+			//tweet element
+        	parent = $(target).closest('.content'),
+        	//tweet text
+			tweetText = $(parent).find('.js-tweet-text').text(),
+			//twitter user
+			twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ',
+			//modal title element 
+			tweetDialogTitle = $(tweetDialog).find('.modal-title');
 		//click to open new tweet modal
-		$('#global-new-tweet-button').click();
+		$(tweetButton).click();
 		//save previus title
-		previusTitle = $('#global-tweet-dialog').find('.modal-title').text();
+		previusTitle = $(tweetDialog).find('.modal-title').text();
 		//change modal title
-		$('#global-tweet-dialog').find('.modal-title').text(titleText);
+		$(tweetDialogTitle).text(titleText);
 		//add class to title elemento to find it later
-		$('#global-tweet-dialog').find('.modal-title').addClass('rtcTitle');
+		$(tweetDialogTitle).addClass('rtcTitle');
 		//remove orginal title class
-		$('#global-tweet-dialog').find('.rtcTitle').removeClass('modal-title');
+		$(tweetDialog).find('.rtcTitle').removeClass('modal-title');
 		//center new title
 		$('.rtcTitle').css('text-align','center');
-		
 		//add retweet text
-        var divContent = $('#tweet-box-global').find('div');
-        if(divContent.length===0){
-            divContent = $('#tweet-box-global');
-        }
-		$(divContent).text(twitterUser+tweetText);
+		$(tweetDialogContent).text(twitterUser+tweetText);
 	};
 
 	//function to set original title, class and empty content
@@ -50,18 +51,16 @@ var ExternFunction = (function() {
 			//remove center title
 			$('.rtcTitle').css('text-align','');
 			//add original title class
-			$('#global-tweet-dialog').find('.rtcTitle').addClass('modal-title');
+			$(tweetDialog).find('.rtcTitle').addClass('modal-title');
+			//modal title element 
+			var tweetDialogTitle = $(tweetDialog).find('.modal-title')
 			//remove temporal "rtc" title class
-			$('#global-tweet-dialog').find('.modal-title').removeClass('rtcTitle');
+			$(tweetDialogTitle).removeClass('rtcTitle');
 			//set original title
-			$('#global-tweet-dialog').find('.modal-title').text(previusTitle);
+			$(tweetDialogTitle).text(previusTitle);
+
 			//remove retweet text
-			var divContent = $('#tweet-box-global').find('div');
-	        if(divContent.length===0){
-	            divContent = $('#tweet-box-global');
-	        }
-	    	//$(divContent).text('');
-			$(divContent).empty();
+			$(tweetDialogContent).empty();
 		}
 	};
 
@@ -74,16 +73,21 @@ var ExternFunction = (function() {
 
 	//function to add li rtc elements and its actions
 	var addOption = function () {
-		//remove tree listener while we modify the page content
-		$('#page-outer').unbind("DOMSubtreeModified");
-		//finde elements with no rtc li option
-		$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
-		//add click Rt+C 
-        $('#page-outer').on('click', 'li.rtc', clickRtc);
-		//add class to ul for mark as option rtc added
-		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
-		//add tree listener to know when we have to add more rtc li elements
-		$('#page-outer').bind("DOMSubtreeModified",treeModifi);
+		if($('ul.tweet-actions:not(.rtc)') !== 0){
+
+			//remove tree listener while we modify the page content
+			$(elementToObserv).unbind("DOMSubtreeModified");
+			//finde elements with no rtc li option
+			$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
+			//add class to ul for mark as option rtc added
+			$('ul.tweet-actions:not(.rtc)').addClass('rtc');
+
+			//add click Rt+C 
+		    $(elementToObserv).on('click', 'li.rtc', clickRtc);
+			
+			//add tree listener to know when we have to add more rtc li elements
+			$(elementToObserv).bind("DOMSubtreeModified",treeModifi);
+		}
 	};
 
 	//set l10 vars and init plugin functions
@@ -95,8 +99,15 @@ var ExternFunction = (function() {
 			titleText = inl10n[2];
 			retweetText = inl10n[3];
 			rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
+			tweetButton = $('#global-new-tweet-button');
+			tweetDialog = $('#global-tweet-dialog');
+			tweetDialogContent = $('#tweet-box-global').find('div');
+	        if(tweetDialogContent.length===0){
+	            tweetDialogContent = $('#tweet-box-global');
+	        }
+	        elementToObserv = $('#page-outer');
 			//add click function whe click open new tweet element
-		$('#global-new-tweet-button').click(clickNewTweet);
+			$(tweetButton).click(clickNewTweet);
 			addOption();
 		};
 

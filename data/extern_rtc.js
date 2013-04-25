@@ -35,8 +35,7 @@ var ExternFunction = (function() {
 		$('#global-tweet-dialog').find('.rtcTitle').removeClass('modal-title');
 		//center new title
 		$('.rtcTitle').css('text-align','center');
-		//add click function whe click open new tweet element
-		$('#global-new-tweet-button').click(clickNewTweet);
+		
 		//add retweet text
         var divContent = $('#tweet-box-global').find('div');
         if(divContent.length===0){
@@ -47,21 +46,23 @@ var ExternFunction = (function() {
 
 	//function to set original title, class and empty content
 	var clickNewTweet = function () {
-		//remove center title
-		$('.rtcTitle').css('text-align','');
-		//add original title class
-		$('#global-tweet-dialog').find('.rtcTitle').addClass('modal-title');
-		//remove temporal "rtc" title class
-		$('#global-tweet-dialog').find('.modal-title').removeClass('rtcTitle');
-		//set original title
-		$('#global-tweet-dialog').find('.modal-title').text(previusTitle);
-		//remove retweet text
-		var divContent = $('#tweet-box-global').find('div');
-        if(divContent.length===0){
-            divContent = $('#tweet-box-global');
-        }
-    	//$(divContent).text('');
-		$(divContent).empty();
+		if(previusTitle !== ''){
+			//remove center title
+			$('.rtcTitle').css('text-align','');
+			//add original title class
+			$('#global-tweet-dialog').find('.rtcTitle').addClass('modal-title');
+			//remove temporal "rtc" title class
+			$('#global-tweet-dialog').find('.modal-title').removeClass('rtcTitle');
+			//set original title
+			$('#global-tweet-dialog').find('.modal-title').text(previusTitle);
+			//remove retweet text
+			var divContent = $('#tweet-box-global').find('div');
+	        if(divContent.length===0){
+	            divContent = $('#tweet-box-global');
+	        }
+	    	//$(divContent).text('');
+			$(divContent).empty();
+		}
 	};
 
 	//function for page tree modification
@@ -83,6 +84,8 @@ var ExternFunction = (function() {
 		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
 		//add tree listener to know when we have to add more rtc li elements
 		$('#page-outer').bind("DOMSubtreeModified",treeModifi);
+		//add click function whe click open new tweet element
+		$('#global-new-tweet-button').click(clickNewTweet);
 	};
 
 	//set l10 vars and init plugin functions

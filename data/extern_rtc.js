@@ -84,8 +84,6 @@ var ExternFunction = (function() {
 		$('ul.tweet-actions:not(.rtc)').addClass('rtc');
 		//add tree listener to know when we have to add more rtc li elements
 		$('#page-outer').bind("DOMSubtreeModified",treeModifi);
-		//add click function whe click open new tweet element
-		$('#global-new-tweet-button').click(clickNewTweet);
 	};
 
 	//set l10 vars and init plugin functions
@@ -97,6 +95,8 @@ var ExternFunction = (function() {
 			titleText = inl10n[2];
 			retweetText = inl10n[3];
 			rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
+			//add click function whe click open new tweet element
+		$('#global-new-tweet-button').click(clickNewTweet);
 			addOption();
 		};
 

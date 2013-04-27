@@ -7,7 +7,7 @@ var ExternFunction = (function() {
 		titleText,
 		retweetText,
 		//rtc li element
-	    rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>',
+	    rtcLiElement,
 		//to save the new tweet original title
 		previusTitle = '',
 		tweetButton,
@@ -26,7 +26,7 @@ var ExternFunction = (function() {
         	//tweet text
 			tweetText = $(parent).find('.js-tweet-text').text(),
 			//twitter user
-			twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ',
+			twitterUser = retweetText + $(parent).find('span.username').find('b').text()+ ' ';
 			
 		//click to open new tweet modal
 		$(tweetButton).click();
@@ -44,11 +44,11 @@ var ExternFunction = (function() {
 	//function to set original title, class and empty content
 	clickNewTweet = function () {
 		if(previusTitle !== ''){
-		//remove center title, add original title class, remove temporal "rtc" title class and set original title
-		$(tweetDialogTitle).css('text-align','')
-			.addClass('modal-title')
-			.removeClass('rtcTitle')
-			.text(previusTitle);
+			//remove center title, add original title class, remove temporal "rtc" title class and set original title
+			$(tweetDialogTitle).css('text-align','')
+				.addClass('modal-title')
+				.removeClass('rtcTitle')
+				.text(previusTitle);
 			//remove retweet text
 			$(tweetDialogContent).empty();
 			previusTitle = '';
@@ -79,23 +79,32 @@ var ExternFunction = (function() {
 		}
 	},
 
+	loadL10Vars = function (inl10n) {
+		liTitle = inl10n[0];
+		liText = inl10n[1];
+		titleText = inl10n[2];
+		retweetText = inl10n[3];
+		rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
+	},
+
+	loadElementsVars = function () {
+		tweetButton = $('#global-new-tweet-button');
+		tweetDialog = $('#global-tweet-dialog');
+		tweetDialogContent = $('#tweet-box-global').find('div');
+        if(tweetDialogContent.length===0){
+            tweetDialogContent = $('#tweet-box-global');
+        }
+        //modal title element 
+		tweetDialogTitle = $(tweetDialog).find('.modal-title');
+        elementToObserv = $('#page-outer');
+	},
+
 	//set l10 vars and init plugin functions
 	setUpAndStart = function(inl10n) {
 		//avoid profile page
 		if($('.profile.active').length === 0){
-			liTitle = inl10n[0];
-			liText = inl10n[1];
-			titleText = inl10n[2];
-			retweetText = inl10n[3];
-			tweetButton = $('#global-new-tweet-button');
-			tweetDialog = $('#global-tweet-dialog');
-			tweetDialogContent = $('#tweet-box-global').find('div');
-	        if(tweetDialogContent.length===0){
-	            tweetDialogContent = $('#tweet-box-global');
-	        }
-	        //modal title element 
-			tweetDialogTitle = $(tweetDialog).find('.modal-title');
-	        elementToObserv = $('#page-outer');
+			loadL10Vars(inl10n);
+			loadElementsVars();
 			//add click function whe click open new tweet element
 			$(tweetButton).click(clickNewTweet);
 			addOption();
@@ -112,7 +121,7 @@ var ExternFunction = (function() {
 			self.port.emit('getL10nMessagesPort');
 		}
 	}
-	
+
 })();
 
 //execute when load

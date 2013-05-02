@@ -4,8 +4,9 @@ rtc
 Firefox plugin to allow retweet with comment in twitter web page
 
 
-Firefox plugin page: https://addons.mozilla.org/es/developers/
-Page where plugin applies: https://twitter.com/
+* Firefox plugin page: https://addons.mozilla.org/es/developers/
+* Page where plugin applies: https://twitter.com/
+* Library to listen for add new elements in DOM elements: https://github.com/naugtur/insertionQuery
 
 How it works:
  1 - Use "pagemod" module to add js files with plugin functionality when   https://twitter.com is loaded.

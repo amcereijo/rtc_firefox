@@ -15,6 +15,7 @@ var ExternFunction = (function() {
 		tweetDialogContent,		
 		elementToObserv,
 		allElementLoaded = false,
+		closeModalNewTweetElement,
 
 
 	//action when rtc li element is clicked
@@ -54,9 +55,9 @@ var ExternFunction = (function() {
 				.removeClass('rtcTitle')
 				.text(previusTitle);
 			
+			$(tweetDialogContent).find('div').empty().html('<br/>');
 			previusTitle = '';
-			//remove retweet text
-			$(tweetDialogContent).empty();
+			$(tweetDialogContent).focus();
 		}
 		
 	},
@@ -73,8 +74,6 @@ var ExternFunction = (function() {
 		if(!allElementLoaded){
 			//add click Rt+C 
     		$(elementToObserv).on('click', 'li.rtc', clickRtc);
-			//add click function whe click open new tweet element
-			$(tweetButton).click(clickNewTweet);
 		}
 	},
 
@@ -83,7 +82,7 @@ var ExternFunction = (function() {
 		liText = inl10n[1];
 		titleText = inl10n[2];
 		retweetText = inl10n[3];
-		rtcLiElement = '<li class="action-reply-container rtc"><a class="with-icn" data-modal="tweet-reply" href="#" title="'+liTitle+'"><i class="sm-rt"></i><b>'+liText+'</b></a></li>';
+		rtcLiElement = $.parseHTML('<li class="action-reply-container rtc"><a href="#" role="button" class="js-tooltip" data-modal="tweet-reply" data-delay="0" data-original-title="'+liTitle+'"><span class="tweet-action-count" aria-hidden="true"><span>'+liText+'</span></span><span class="Icon Icon--reply"></span><span class="u-isHiddenVisually">'+liText+'</span></a></li>');
 	},
 
 
@@ -98,6 +97,7 @@ var ExternFunction = (function() {
         //modal title element 
 		tweetDialogTitle = $(tweetDialog).find('.modal-title');
 		elementToObserv = $('#page-outer');
+		closeModalNewTweetElement = $('.modal-close.js-close');
 	},
 
 	//set l10 vars and init plugin functions
@@ -112,6 +112,8 @@ var ExternFunction = (function() {
 			});
 			addOptionsAndClickEvents();
 			allElementLoaded = true;
+			//add listener to new tweet close button 
+			closeModalNewTweetElement.on('click', clickNewTweet);
 		}
 
 	};

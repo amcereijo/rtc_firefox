@@ -64,11 +64,10 @@ var ExternFunction = (function() {
 
 	//function to add li rtc elements and its actions
 	addOptionsAndClickEvents = function () {
-		if($('ul.tweet-actions:not(.rtc)').length !== 0){
-			//finde elements with no rtc li option
-			$('ul.tweet-actions:not(.rtc)').prepend(rtcLiElement);
-			//add class to ul for mark as option rtc added
-			$('ul.tweet-actions:not(.rtc)').addClass('rtc');	
+		var elements = $('ul.js-actions:not(.rtc)');
+		if(elements.length !== 0){
+			//add class to ul for mark as option rtc added and add rtc opction
+			elements.addClass('rtc').prepend(rtcLiElement);
 		}
 
 		if(!allElementLoaded){
@@ -82,7 +81,7 @@ var ExternFunction = (function() {
 		liText = inl10n[1];
 		titleText = inl10n[2];
 		retweetText = inl10n[3];
-		rtcLiElement = $.parseHTML('<li class="action-reply-container rtc"><a href="#" role="button" class="js-tooltip" data-modal="tweet-reply" data-delay="0" data-original-title="'+liTitle+'"><span class="tweet-action-count" aria-hidden="true"><span>'+liText+'</span></span><span class="Icon Icon--reply"></span><span class="u-isHiddenVisually">'+liText+'</span></a></li>');
+		rtcLiElement = $.parseHTML('<li class="action-reply-container rtc"><a role="button" class="with-icn js-tooltip" data-modal="tweet-reply" href="#" data-original-title="'+liTitle+'"><span class="Icon Icon--reply"></span><b>'+liText+'</b></a></li>');
 	},
 
 

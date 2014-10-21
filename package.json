@@ -5,7 +5,7 @@
 	"author": "_amcereijo_", 
 	"url": "", 
 	"dependencies": ["api-utils", "addon-kit"], 
-	"version": "initial.rev70", 
+	"version": "initial.rev71", 
 	"lib": "lib", 
 	"fullName": "Retweet with comment", 
 	"main": "main", 

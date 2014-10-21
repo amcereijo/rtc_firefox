@@ -72,7 +72,7 @@ var ExternFunction = (function() {
 
 		if(!allElementLoaded){
 			//add click Rt+C 
-    		elementToObserv.on('click', 'div.rtc', clickRtc);
+    		elementToObserv.on('click', 'div.js-rtc', clickRtc);
 		}
 	},
 
@@ -81,7 +81,7 @@ var ExternFunction = (function() {
 		liText = inl10n[1];
 		titleText = inl10n[2];
 		retweetText = inl10n[3];
-		rtcLiElement = $.parseHTML('<div class="ProfileTweet-action ProfileTweet-action--reply rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>');
+		rtcLiElement = $.parseHTML('<div class="ProfileTweet-action ProfileTweet-action--reply js-rtc"><button class="ProfileTweet-actionButton u-textUserColorHover js-actionButton js-actionReply js-tooltip" data-modal="ProfileTweet-reply" type="button" data-original-title="'+liTitle+'"><span class="Icon Icon--reply username">'+liText+'</span><span class="ProfileTweet-actionCount u-textUserColorHover ProfileTweet-actionCount--isZero"><span class="ProfileTweet-actionCountForPresentation" aria-hidden="true"></span></span></button></div>');
 	},
 
 
